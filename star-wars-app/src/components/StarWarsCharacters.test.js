@@ -11,12 +11,22 @@ test('renders page, list of characters, functioning previous/next buttons', asyn
         { name:'Luke Skywalker', url:'test'}
         ]
     });
-    const { getByText } = render(<StarWarsCharacters />);
+    const { getByText, findByText } = render(<StarWarsCharacters />);
+
     const previousBttn = getByText(/previous/i);
     const nextBttn = getByText(/next/i);
-    fireEvent.click(previousBttn);
+    
     fireEvent.click(nextBttn);
-    expect(mockGetData).toHaveBeenCalledTimes(1);    
-    await wait(() =>  expect(getByText(/luke/i)));
+    fireEvent.click(previousBttn);
+    //compare url to prevUrl
+
+    expect(mockGetData).toHaveBeenCalledTimes(3);
+    
+
+    expect(getByText(/previous/i, /next/i ));
+    expect(await findByText(/luke/i)).toBeVisible();
 
 });
+
+
+
